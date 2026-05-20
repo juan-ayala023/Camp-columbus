@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export default function WompiPaymentButton({ payment, buyer }) {
+export default function WompiPaymentButton({ payment, buyer, orderId }) {
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -20,9 +20,8 @@ export default function WompiPaymentButton({ payment, buyer }) {
     script.setAttribute('data-reference', payment.reference)
     script.setAttribute('data-signature:integrity', payment.integrity_signature)
 
-    if (payment.redirect_url) {
-      script.setAttribute('data-redirect-url', payment.redirect_url)
-    }
+    const fallbackRedirect = `${window.location.origin}/?order_id=${encodeURIComponent(orderId || payment.reference || '')}`
+    script.setAttribute('data-redirect-url', payment.redirect_url || fallbackRedirect)
 
     if (buyer?.email) {
       script.setAttribute('data-customer-data:email', buyer.email)

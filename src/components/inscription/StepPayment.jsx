@@ -70,7 +70,7 @@ export default function StepPayment({ orderId, buyer, onClose }) {
         )}
 
         {!loading && !error && payment && (
-          <WompiPaymentButton payment={payment} buyer={buyer} />
+          <WompiPaymentButton payment={payment} buyer={buyer} orderId={orderId} />
         )}
       </div>
 
